@@ -76,7 +76,7 @@
     };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
     .tesla-counter {
         float: left;

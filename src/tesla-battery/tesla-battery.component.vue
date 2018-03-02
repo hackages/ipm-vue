@@ -2,29 +2,29 @@
     <form class="tesla-battery">
         <h1>{{ title }}</h1>
         <tesla-car :wheelsize="tesla.wheels" :speed="tesla.speed"/>
-        <!--<tesla-stats :stats="stats"></tesla-stats>-->
+        <tesla-stats :stats="stats"/>
         <div class="tesla-controls cf">
-             <tesla-counter
-              :title="'Speed'"
-              :unit="'mph'"
-              :step="5"
-              :min="45"
-              :max="70"
-              v-model="tesla.speed"/>
+            <tesla-counter
+                    :title="'Speed'"
+                    :unit="'mph'"
+                    :step="5"
+                    :min="45"
+                    :max="70"
+                    v-model="tesla.speed"/>
             <div class="tesla-climate cf">
                 <tesla-counter
-                   :title="'Outside Temperature'"
-                   :unit="'°'"
-                   :step="10"
-                   :min="-10"
-                   :max="40"
-                   v-model="tesla.temperature"/>
+                        :title="'Outside Temperature'"
+                        :unit="'°'"
+                        :step="10"
+                        :min="-10"
+                        :max="40"
+                        v-model="tesla.temperature"/>
                 <tesla-climate
                         :limit="tesla.temperature > 10"
                         :value="tesla.climate"
-                        :onClick="changeClimate" />
+                        :onClick="changeClimate"/>
             </div>
-            <!-- <tesla-wheels></tesla-wheels> -->
+            <tesla-wheels :onClick="changeWheelSize"/>
         </div>
         <div class="tesla-battery__notice">
             <p>
@@ -45,12 +45,19 @@
     import TeslaCar from './components/tesla-car.component';
     import TeslaClimate from './components/tesla-climate.component';
     import TeslaCounter from './components/tesla-counter.component';
+    import TeslaStats from './components/tesla-stats.component';
+    import TeslaWheels from './components/tesla-wheels.component';
+
+    import teslaService from './tesla-battery.service';
+
     export default {
         name: 'tesla-battery',
         components: {
             TeslaCar,
             TeslaClimate,
-            TeslaCounter
+            TeslaCounter,
+            TeslaStats,
+            TeslaWheels
         },
         data() {
             return {
@@ -65,8 +72,8 @@
             };
         },
         computed: {
-            model() {
-                return {};
+            models() {
+                return teslaService.getModelData();
             },
             stats() {
                 return this.results.map(model => {
@@ -84,6 +91,9 @@
         methods: {
             changeClimate() {
                 this.tesla.climate = !this.tesla.climate;
+            },
+            changeWheelSize(size) {
+                this.tesla.wheels = size;
             }
         }
     };
