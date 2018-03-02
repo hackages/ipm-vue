@@ -7,6 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "format": "prettier --write 'src/**/*.js'",
+    "format:vue": "prettier --write 'src/**/*.vue'",
     "precommit": "lint-staged"
   },
   "dependencies": {
@@ -26,13 +27,6 @@
       "@vue/app"
     ]
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ]
-  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
@@ -46,6 +40,12 @@
   "lint-staged": {
     "*.js": [
       "prettier --write",
+      "npm run lint",
+      "git add"
+    ],
+    "*.vue": [
+      "prettier --write",
+      "npm run lint",
       "git add"
     ],
     "*.{css,scss,json,md}": [
