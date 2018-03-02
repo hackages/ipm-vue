@@ -25,7 +25,7 @@
     };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     @mixin prefix($property, $value) {
         $prefixes: (webkit moz ms o);
         @each $prefix in $prefixes {

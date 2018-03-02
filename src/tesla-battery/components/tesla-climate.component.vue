@@ -49,7 +49,7 @@
     };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .tesla-climate {
         float: left;
         &__item {

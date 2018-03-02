@@ -6,6 +6,7 @@
                     class="tesla-counter__item"
                     tabindex="0"
                     @blur="onBlur($event)"
+                    @keydown="onKeyUp($event)"
                     @focus="onFocus($event)"
             >
                 <p class="tesla-counter__number">
@@ -71,12 +72,24 @@
                 this.focused = true;
                 event.preventDefault();
                 event.stopPropagation();
+            },
+            onKeyUp(event){
+                let handlers = {
+                    ArrowDown: () => this.decrement(),
+                    ArrowUp: () => this.increment()
+                };
+
+                if (handlers[event.code]) {
+                    handlers[event.code]();
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
             }
         }
     };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
     .tesla-counter {
         float: left;
