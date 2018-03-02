@@ -4,26 +4,25 @@
         <tesla-car :wheelsize="tesla.wheels" :speed="tesla.speed"/>
         <!--<tesla-stats :stats="stats"></tesla-stats>-->
         <div class="tesla-controls cf">
-            <!-- <tesla-counter
+             <tesla-counter
               :title="'Speed'"
               :unit="'mph'"
               :step="5"
               :min="45"
-              :max="70">
-            </tesla-counter> -->
+              :max="70"
+              v-model="tesla.speed"/>
             <div class="tesla-climate cf">
-                <!--  <tesla-counter
+                <tesla-counter
                    :title="'Outside Temperature'"
                    :unit="'°'"
                    :step="10"
                    :min="-10"
-                   :max="40">
-                 </tesla-counter> -->
+                   :max="40"
+                   v-model="tesla.temperature"/>
                 <tesla-climate
                         :limit="tesla.temperature > 10"
                         :value="tesla.climate"
-                        :onClick="changeClimate">
-                </tesla-climate>
+                        :onClick="changeClimate" />
             </div>
             <!-- <tesla-wheels></tesla-wheels> -->
         </div>
@@ -45,12 +44,13 @@
 <script>
     import TeslaCar from './components/tesla-car.component';
     import TeslaClimate from './components/tesla-climate.component';
-
+    import TeslaCounter from './components/tesla-counter.component';
     export default {
         name: 'tesla-battery',
         components: {
             TeslaCar,
-            TeslaClimate
+            TeslaClimate,
+            TeslaCounter
         },
         data() {
             return {
