@@ -1,20 +1,20 @@
 <template>
     <div id="app">
-        <HelloWorld msg="Welcome to Your Vue.js App"/>
+        <TeslaBattery/>
     </div>
 </template>
 
 <script>
-    import HelloWorld from './components/HelloWorld.vue';
+import TeslaBattery from './tesla-battery/tesla-battery.component';
 
-    export default {
-        name: 'app',
-        components: {
-            HelloWorld
-        }
-    };
+export default {
+  name: 'app',
+  components: {
+    TeslaBattery,
+  },
+};
 </script>
 
 <style>
-    @import "styles.css";
+@import 'styles.css';
 </style>
