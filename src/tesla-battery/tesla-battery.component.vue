@@ -42,93 +42,93 @@
 </template>
 
 <script>
-    import TeslaCar from './components/tesla-car.component';
-    import TeslaClimate from './components/tesla-climate.component';
-    import TeslaCounter from './components/tesla-counter.component';
-    import TeslaStats from './components/tesla-stats.component';
-    import TeslaWheels from './components/tesla-wheels.component';
+import TeslaCar from './components/tesla-car.component';
+import TeslaClimate from './components/tesla-climate.component';
+import TeslaCounter from './components/tesla-counter.component';
+import TeslaStats from './components/tesla-stats.component';
+import TeslaWheels from './components/tesla-wheels.component';
 
-    import teslaService from './tesla-battery.service';
+import teslaService from './tesla-battery.service';
 
-    export default {
-        name: 'tesla-battery',
-        components: {
-            TeslaCar,
-            TeslaClimate,
-            TeslaCounter,
-            TeslaStats,
-            TeslaWheels
-        },
-        data() {
-            return {
-                title: 'Ranger Per Charge',
-                results: ['60', '60D', '75', '75D', '90D', 'P100D'],
-                tesla: {
-                    speed: 55,
-                    temperature: 20,
-                    climate: true,
-                    wheels: 19,
-                },
-            };
-        },
-        computed: {
-            models() {
-                return teslaService.getModelData();
-            },
-            stats() {
-                return this.results.map(model => {
-                    const {speed, temperature, climate, wheels} = this.tesla;
-                    const miles = this.models[model][wheels][climate ? 'on' : 'off'].speed[
-                        speed
-                        ][temperature];
-                    return {
-                        model,
-                        miles,
-                    };
-                });
-            },
-        },
-        methods: {
-            changeClimate() {
-                this.tesla.climate = !this.tesla.climate;
-            },
-            changeWheelSize(size) {
-                this.tesla.wheels = size;
-            }
-        }
+export default {
+  name: 'tesla-battery',
+  components: {
+    TeslaCar,
+    TeslaClimate,
+    TeslaCounter,
+    TeslaStats,
+    TeslaWheels,
+  },
+  data() {
+    return {
+      title: 'Ranger Per Charge',
+      results: ['60', '60D', '75', '75D', '90D', 'P100D'],
+      tesla: {
+        speed: 55,
+        temperature: 20,
+        climate: true,
+        wheels: 19,
+      },
     };
+  },
+  computed: {
+    models() {
+      return teslaService.getModelData();
+    },
+    stats() {
+      return this.results.map(model => {
+        const {speed, temperature, climate, wheels} = this.tesla;
+        const miles = this.models[model][wheels][climate ? 'on' : 'off'].speed[
+          speed
+        ][temperature];
+        return {
+          model,
+          miles,
+        };
+      });
+    },
+  },
+  methods: {
+    changeClimate() {
+      this.tesla.climate = !this.tesla.climate;
+    },
+    changeWheelSize(size) {
+      this.tesla.wheels = size;
+    },
+  },
+};
 </script>
 
-<style lang="scss">
-    .tesla-battery {
-        width: 1050px;
-        margin: 0 auto;
-        h1 {
-            font-family: 'RobotoNormal';
-            font-weight: 100;
-            font-size: 38px;
-            text-align: center;
-            letter-spacing: 3px;
-        }
-        &__notice {
-            margin: 20px 0;
-            font-size: 15px;
-            color: #666;
-            line-height: 20px;
-        }
-    }
+<style lang="scss" scoped>
+.tesla-battery {
+  width: 1050px;
+  margin: 0 auto;
+  h1 {
+    font-family: 'RobotoNormal';
+    font-weight: 100;
+    font-size: 38px;
+    text-align: center;
+    letter-spacing: 3px;
+  }
+  &__notice {
+    margin: 20px 0;
+    font-size: 15px;
+    color: #666;
+    line-height: 20px;
+  }
+}
 
-    .tesla-climate {
-        float: left;
-        width: 420px;
-        padding: 0 40px;
-        margin: 0 40px 0 0;
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-    }
+.tesla-climate {
+  float: left;
+  width: 420px;
+  padding: 0 40px;
+  margin: 0 40px 0 0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
 
-    .tesla-controls {
-        display: block;
-        width: 100%;
-    }
+.tesla-controls {
+  display: block;
+  width: 100%;
+}
 </style>
