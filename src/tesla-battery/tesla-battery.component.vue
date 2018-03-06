@@ -23,13 +23,13 @@
 </template>
 
 <script>
-import TeslaCar from './components/tesla-car.component'
-import TeslaClimate from './components/tesla-climate.component'
-import TeslaCounter from './components/tesla-counter.component'
-import TeslaStats from './components/tesla-stats.component'
-import TeslaWheels from './components/tesla-wheels.component'
+import TeslaCar from './components/tesla-car.component';
+import TeslaClimate from './components/tesla-climate.component';
+import TeslaCounter from './components/tesla-counter.component';
+import TeslaStats from './components/tesla-stats.component';
+import TeslaWheels from './components/tesla-wheels.component';
 
-import teslaService from './tesla-battery.service'
+import teslaService from './tesla-battery.service';
 
 export default {
   name: 'tesla-battery',
@@ -50,37 +50,37 @@ export default {
         climate: true,
         wheels: 19,
       },
-    }
+    };
   },
   computed: {
     models() {
-      return teslaService.getModelData()
+      return teslaService.getModelData();
     },
     stats() {
       return this.results.map(model => {
-        const {speed, temperature, climate, wheels} = this.tesla
+        const {speed, temperature, climate, wheels} = this.tesla;
         const miles = this.models[model][wheels][climate ? 'on' : 'off'].speed[
           speed
-        ][temperature]
+        ][temperature];
         return {
           model,
           miles,
-        }
-      })
+        };
+      });
     },
   },
   methods: {
     changeClimate() {
-      this.tesla.climate = !this.tesla.climate
+      this.tesla.climate = !this.tesla.climate;
     },
     changeWheelSize(size) {
-      this.tesla.wheels = size
+      this.tesla.wheels = size;
     },
   },
-}
+};
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tesla-battery {
   width: 1050px;
   margin: 0 auto;

@@ -28,17 +28,17 @@ export default {
   data() {
     return {
       focused: false,
-    }
+    };
   },
   methods: {
     onBlur() {
-      this.focused = false
+      this.focused = false;
     },
     onFocus() {
-      this.focused = true
+      this.focused = true;
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
