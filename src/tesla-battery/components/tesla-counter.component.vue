@@ -52,10 +52,14 @@ export default {
   },
   methods: {
     increment() {
-      this.$emit('input', this.value + this.step);
+      if (this.value < this.max) {
+        this.$emit('input', this.value + this.step);
+      }
     },
     decrement() {
-      this.$emit('input', this.value - this.step);
+      if (this.value > this.min) {
+        this.$emit('input', this.value - this.step);
+      }
     },
     onFocus(event) {
       this.focused = false;

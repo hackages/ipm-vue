@@ -80,7 +80,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .tesla-battery {
   width: 1050px;
   margin: 0 auto;

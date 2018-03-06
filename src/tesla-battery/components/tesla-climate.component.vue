@@ -1,5 +1,5 @@
 <template>
-    <div class="tesla-climate">
+    <div>
         <label class="tesla-climate__item" :class="{'tesla-heat' :!limit, 'tesla-climate__item--active': value, 'tesla-climate__item--focused': focused === value}">
             <p>{{ (limit ? 'ac' : 'heat') }} {{ value ? 'on' : 'off' }}</p>
             <i class="tesla-climate__icon"></i>
@@ -46,7 +46,7 @@ export default {
   float: left;
   &__item {
     cursor: pointer;
-    display: block;
+    display: inline-block;
     width: 100px;
     height: 100px;
     border: 6px solid #f7f7f7;
