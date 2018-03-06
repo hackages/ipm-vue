@@ -2,13 +2,7 @@
     <div class="tesla-counter">
         <p class="tesla-counter__title">{{ title }}</p>
         <div class="tesla-counter__container cf">
-            <div
-                    class="tesla-counter__item"
-                    tabindex="0"
-                    @blur="onBlur($event)"
-                    @keydown="onKeyUp($event)"
-                    @focus="onFocus($event)"
-            >
+            <div class="tesla-counter__item" tabindex="0" @blur="onBlur($event)" @keydown="onKeyUp($event)" @focus="onFocus($event)">
                 <p class="tesla-counter__number">
                     {{ value }}
                     <span>{{ unit }}</span>
