@@ -1,17 +1,9 @@
 <template>
-    <div class="tesla-climate">
-        <label
-                class="tesla-climate__item"
-                :class="{'tesla-heat' :!limit, 'tesla-climate__item--active': value, 'tesla-climate__item--focused': focused === value}">
+    <div>
+        <label class="tesla-climate__item" :class="{'tesla-heat' :!limit, 'tesla-climate__item--active': value, 'tesla-climate__item--focused': focused === value}">
             <p>{{ (limit ? 'ac' : 'heat') }} {{ value ? 'on' : 'off' }}</p>
             <i class="tesla-climate__icon"></i>
-            <input
-                    type="checkbox"
-                    name="climate"
-                    :checked="value"
-                    @click="onClick()"
-                    @blur="onBlur()"
-                    @focus="onFocus()">
+            <input type="checkbox" name="climate" :checked="value" @click="onClick()" @blur="onBlur()" @focus="onFocus()">
         </label>
     </div>
 </template>
@@ -54,7 +46,7 @@ export default {
   float: left;
   &__item {
     cursor: pointer;
-    display: block;
+    display: inline-block;
     width: 100px;
     height: 100px;
     border: 6px solid #f7f7f7;
@@ -100,7 +92,7 @@ export default {
     font-size: 10px;
     text-transform: uppercase;
   }
-  input[type=checkbox] {
+  input[type='checkbox'] {
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
