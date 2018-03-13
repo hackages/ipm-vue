@@ -1,25 +1,25 @@
 <template>
-    <form class="tesla-battery">
-        <h1>{{ title }}</h1>
-        <tesla-car :wheelsize="tesla.wheels" :speed="tesla.speed" />
-        <tesla-stats :stats="stats" />
-        <div class="tesla-controls cf">
-            <tesla-counter :title="'Speed'" :unit="'mph'" :step="5" :min="45" :max="70" v-model="tesla.speed" />
-            <div class="tesla-climate cf">
-                <tesla-counter :title="'Outside Temperature'" :unit="'°'" :step="10" :min="-10" :max="40" v-model="tesla.temperature" />
-                <tesla-climate :limit="tesla.temperature > 10" :value="tesla.climate" :onClick="changeClimate" />
-            </div>
-            <tesla-wheels :onClick="changeWheelSize" />
-        </div>
-        <div class="tesla-battery__notice">
-            <p>
-                The actual amount of range that you experience will vary based on your particular use conditions. See how particular use conditions may affect your range in our simulation model.
-            </p>
-            <p>
-                Vehicle range may vary depending on the vehicle configuration, battery age and condition, driving style and operating, environmental and climate conditions.
-            </p>
-        </div>
-    </form>
+  <form class="tesla-battery">
+    <h1>{{ title }}</h1>
+    <tesla-car :wheelsize="tesla.wheels" :speed="tesla.speed" />
+    <tesla-stats :stats="stats" />
+    <div class="tesla-controls cf">
+      <tesla-counter :title="'Speed'" :unit="'kmh'" :step="5" :min="45" :max="70" v-model="tesla.speed" />
+      <div class="tesla-climate cf">
+        <tesla-counter :title="'Outside Temperature'" :unit="'°'" :step="10" :min="-10" :max="40" v-model="tesla.temperature" />
+        <tesla-climate :limit="tesla.temperature > 10" :value="tesla.climate" :onClick="changeClimate" />
+      </div>
+      <tesla-wheels :onClick="changeWheelSize" />
+    </div>
+    <div class="tesla-battery__notice">
+      <p>
+        The actual amount of range that you experience will vary based on your particular use conditions. See how particular use conditions may affect your range in our simulation model.
+      </p>
+      <p>
+        Vehicle range may vary depending on the vehicle configuration, battery age and condition, driving style and operating, environmental and climate conditions.
+      </p>
+    </div>
+  </form>
 </template>
 
 <script>

@@ -1,19 +1,19 @@
 <template>
-    <div class="tesla-counter">
-        <p class="tesla-counter__title">{{ title }}</p>
-        <div class="tesla-counter__container cf">
-            <div class="tesla-counter__item" tabindex="0" @blur="onBlur($event)" @keydown="onKeyUp($event)" @focus="onFocus($event)">
-                <p class="tesla-counter__number">
-                    {{ value }}
-                    <span>{{ unit }}</span>
-                </p>
-                <div class="tesla-counter__controls" tabindex="-1">
-                    <button tabindex="-1" type="button" @click="increment()" :disabled="value === max"></button>
-                    <button tabindex="-1" type="button" @click="decrement()" :disabled="value === min"></button>
-                </div>
-            </div>
+  <div class="tesla-counter">
+    <p class="tesla-counter__title">{{ title }}</p>
+    <div class="tesla-counter__container cf">
+      <div class="tesla-counter__item" tabindex="0" @blur="onBlur($event)" @keydown="onKeyUp($event)" @focus="onFocus($event)">
+        <p class="tesla-counter__number">
+          {{ kmhOrMph }}
+          <span>{{ unit }}</span>
+        </p>
+        <div class="tesla-counter__controls" tabindex="-1">
+          <button tabindex="-1" type="button" @click="increment()" :disabled="value === max"></button>
+          <button tabindex="-1" type="button" @click="decrement()" :disabled="value === min"></button>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -49,6 +49,13 @@ export default {
     return {
       focused: false,
     };
+  },
+  computed: {
+    kmhOrMph() {
+      return this.unit === 'kmh'
+        ? Math.floor(this.value * 1.609344)
+        : this.value;
+    },
   },
   methods: {
     increment() {
@@ -118,7 +125,7 @@ export default {
     span {
       position: absolute;
       top: 0;
-      left: 35px;
+      left: 45px;
       font-size: 15px;
       text-transform: uppercase;
     }

@@ -1,12 +1,12 @@
 <template>
-    <div class="tesla-stats">
-        <ul>
-            <li v-for="stat in stats" :key="stat.model">
-                <div :class="'tesla-stats-icon tesla-stats-icon--'+stat.model |  lowercase"></div>
-                <p>{{ stat.miles }}</p>
-            </li>
-        </ul>
-    </div>
+  <div class="tesla-stats">
+    <ul>
+      <li v-for="stat in stats" :key="stat.model">
+        <div :class="'tesla-stats-icon tesla-stats-icon--'+stat.model |  lowercase"></div>
+        <p>{{ stat.miles | km }}</p>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -21,6 +21,9 @@ export default {
   filters: {
     lowercase(value) {
       return !value ? '' : value.toLowerCase();
+    },
+    km(value) {
+      return Math.floor(value * 1.609344);
     },
   },
 };
@@ -48,7 +51,7 @@ export default {
           font-size: 14px;
           font-weight: normal;
           font-family: 'RobotoNormal';
-          content: 'MI';
+          content: 'KM';
           position: absolute;
           top: 8px;
           right: 0;
