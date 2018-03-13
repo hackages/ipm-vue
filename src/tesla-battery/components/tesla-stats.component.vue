@@ -54,7 +54,7 @@ export default {
           content: 'KM';
           position: absolute;
           top: 8px;
-          right: 0;
+          right: 10;
         }
       }
     }
