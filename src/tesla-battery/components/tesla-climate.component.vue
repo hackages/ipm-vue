@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <label class="tesla-climate__item" :class="{'tesla-heat' :!limit, 'tesla-climate__item--active': value, 'tesla-climate__item--focused': focused === value}">
-            <p>{{ (limit ? 'ac' : 'heat') }} {{ value ? 'on' : 'off' }}</p>
-            <i class="tesla-climate__icon"></i>
-            <input type="checkbox" name="climate" :checked="value" @click="onClick()" @blur="onBlur()" @focus="onFocus()">
-        </label>
-    </div>
+  <div>
+    <label class="tesla-climate__item" :class="{'tesla-heat' :!limit, 'tesla-climate__item--active': value, 'tesla-climate__item--focused': focused === value}">
+      <p class="heat">{{ (limit ? 'ac' : 'heat') }} {{ value ? 'on' : 'off' }}</p>
+      <i class="tesla-climate__icon"></i>
+      <input type="checkbox" name="climate" :checked="value" @click="onClick()" @blur="onBlur()" @focus="onFocus()">
+    </label>
+  </div>
 </template>
 
 <script>
