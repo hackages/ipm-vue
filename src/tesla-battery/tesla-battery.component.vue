@@ -4,12 +4,12 @@
     <tesla-car :wheelsize="tesla.wheels" :speed="tesla.speed" />
     <tesla-stats :stats="stats" />
     <div class="tesla-controls cf">
-      <tesla-counter :title="'Speed'" :unit="'kmh'" :step="5" :min="45" :max="70" v-model="tesla.speed" />
+      <tesla-counter title="Speed" unit="kmh" :step="5" :min="45" :max="70" v-model="tesla.speed" />
       <div class="tesla-climate cf">
-        <tesla-counter :title="'Outside Temperature'" :unit="'°'" :step="10" :min="-10" :max="40" v-model="tesla.temperature" />
+        <tesla-counter title="Outside Temperature" unit="°" :step="10" :min="-10" :max="40" v-model="tesla.temperature" />
         <tesla-climate :limit="tesla.temperature > 10" :value="tesla.climate" :onClick="changeClimate" />
       </div>
-      <tesla-wheels :onClick="changeWheelSize" />
+      <tesla-wheels v-model="tesla.wheels" />
     </div>
     <div class="tesla-battery__notice">
       <p>
@@ -72,9 +72,6 @@ export default {
   methods: {
     changeClimate() {
       this.tesla.climate = !this.tesla.climate;
-    },
-    changeWheelSize(size) {
-      this.tesla.wheels = size;
     },
   },
 };

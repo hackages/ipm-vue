@@ -1,15 +1,15 @@
 <template>
   <div class="tesla-counter">
-    <p class="tesla-counter__title">{{ title }}</p>
+    <p class="tesla-counter__title" v-once>{{ title }}</p>
     <div class="tesla-counter__container cf">
-      <div class="tesla-counter__item" tabindex="0" @blur="onBlur($event)" @keydown="onKeyUp($event)" @focus="onFocus($event)">
+      <div class="tesla-counter__item" tabindex="0" @blur.stop.prevent="onBlur" @keydown.stop.prevent="onKeyUp" @focus.stop.prevent="onFocus">
         <p class="tesla-counter__number">
           {{ kmhOrMph }}
           <span>{{ unit }}</span>
         </p>
         <div class="tesla-counter__controls" tabindex="-1">
-          <button tabindex="-1" type="button" @click="increment()" :disabled="value === max"></button>
-          <button tabindex="-1" type="button" @click="decrement()" :disabled="value === min"></button>
+          <button tabindex="-1" type="button" @click="increment" :disabled="value === max"></button>
+          <button tabindex="-1" type="button" @click="decrement" :disabled="value === min"></button>
         </div>
       </div>
     </div>
@@ -68,15 +68,11 @@ export default {
         this.$emit('input', this.value - this.step);
       }
     },
-    onFocus(event) {
+    onFocus() {
       this.focused = false;
-      event.preventDefault();
-      event.stopPropagation();
     },
-    onBlur(event) {
+    onBlur() {
       this.focused = true;
-      event.preventDefault();
-      event.stopPropagation();
     },
     onKeyUp(event) {
       let handlers = {
@@ -86,8 +82,6 @@ export default {
 
       if (handlers[event.code]) {
         handlers[event.code]();
-        event.preventDefault();
-        event.stopPropagation();
       }
     },
   },
