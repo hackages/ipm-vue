@@ -1,33 +1,26 @@
 <template>
   <form class="tesla-battery">
     <h1>{{ title }}</h1>
-    <tesla-car
-      :wheelsize="tesla.wheels"
-      :speed="tesla.speed"
-    />
-    <tesla-stats :stats="stats" />
+    <tesla-car :wheelsize="tesla.wheels"
+               :speed="tesla.speed" />
+    <tesla-stats :stats="statsBis" />
     <div class="tesla-controls cf">
-      <tesla-counter
-        :title="'Speed'"
-        :unit="'kmh'"
-        :step="5"
-        :min="45"
-        :max="70"
-        v-model="tesla.speed"
-      />
+      <tesla-counter :title="'Speed'"
+                     :unit="'kmh'"
+                     :step="10"
+                     :min="70"
+                     :max="140"
+                     v-model="tesla.speed" />
       <div class="tesla-climate cf">
-        <tesla-counter
-          :title="'Outside Temperature'"
-          :unit="'°'"
-          :step="10"
-          :min="-10"
-          :max="40"
-          v-model="tesla.temperature"
-        />
+        <tesla-counter :title="'Outside Temperature'"
+                       :unit="'°'"
+                       :step="10"
+                       :min="-10"
+                       :max="40"
+                       v-model="tesla.temperature" />
         <tesla-climate :limit="tesla.temperature > 10"
-          :value="tesla.climate"
-          :onClick="changeClimate"
-        />
+                       :value="tesla.climate"
+                       :onClick="changeClimate" />
       </div>
       <tesla-wheels v-model="tesla.wheels" />
     </div>
@@ -63,13 +56,14 @@ export default {
   data() {
     return {
       title: 'Ranger Per Charge',
-      results: ['60', '60D', '75', '75D', '90D', 'P100D'],
+      results: ['75', '75D', '90D', 'P100D'],
       tesla: {
-        speed: 55,
+        speed: 70,
         temperature: 20,
         climate: true,
         wheels: 19,
       },
+      metrics: [],
     };
   },
   computed: {
@@ -88,10 +82,46 @@ export default {
         };
       });
     },
+    statsBis() {
+      return this.metrics.map(({model, metrics}) => {
+        const {speed, temperature, climate, wheels} = this.tesla;
+        const miles = metrics
+          .filter(metric => metric.temp === temperature)
+          .filter(metric => metric.wheelsize === wheels)
+          .filter(metric => metric.ac === (climate ? 'on' : 'off'))[0]
+          .hwy.filter(hwy => hwy.mph === speed)[0].miles;
+        return {
+          model,
+          miles,
+        };
+      });
+    },
   },
   methods: {
     changeClimate() {
       this.tesla.climate = !this.tesla.climate;
+    },
+    getStats() {
+      const results = Promise.all(
+        this.results.map(model => {
+          const {speed, temperature, climate, wheels} = this.tesla;
+          return import(`../assets/mocks/metric${model}Miles.json`).then(
+            metrics => ({
+              model,
+              metrics,
+            })
+          );
+        })
+      );
+      return results;
+    },
+  },
+  watch: {
+    results: {
+      immediate: true,
+      async handler() {
+        this.metrics = await this.getStats();
+      },
     },
   },
 };
