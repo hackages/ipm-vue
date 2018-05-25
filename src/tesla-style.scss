@@ -105,6 +105,77 @@
   &--rear {
     right: -26px;
   }
+  &--km {
+    &--19 {
+      &--70 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 290ms steps(6) infinite);
+      }
+      &--80 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 260ms steps(6) infinite);
+      }
+      &--90 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 230ms steps(6) infinite);
+      }
+      &--100 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 200ms steps(6) infinite);
+      }
+      &--110 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 170ms steps(6) infinite);
+      }
+      &--120 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 140ms steps(6) infinite);
+      }
+      &--130 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 110ms steps(6) infinite);
+      }
+      &--140 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 80ms steps(6) infinite);
+      }
+    }
+    &--21 {
+      &--70 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 640ms steps(12) infinite);
+      }
+      &--80 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 560ms steps(12) infinite);
+      }
+      &--90 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 480ms steps(12) infinite);
+      }
+      &--100 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 400ms steps(12) infinite);
+      }
+      &--110 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 320ms steps(12) infinite);
+      }
+      &--120 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 240ms steps(12) infinite);
+      }
+      &--130 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 160ms steps(12) infinite);
+      }
+      &--140 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 80ms steps(12) infinite);
+      }
+    }
+  }
+
   &--19 {
     &--45 {
       background-image: url(assets/wheel-19.png);

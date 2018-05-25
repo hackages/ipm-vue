@@ -104,7 +104,6 @@ export default {
     getStats() {
       const results = Promise.all(
         this.results.map(model => {
-          const {speed, temperature, climate, wheels} = this.tesla;
           return import(`../assets/mocks/metric${model}Miles.json`).then(
             metrics => ({
               model,
