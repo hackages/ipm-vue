@@ -154,7 +154,8 @@
   text-align: center;
   font-weight: bold;
   color: grey;
-  font-size: 8px;
+  padding: 0;
+  margin: 0;
 }
 
 .open {
@@ -366,6 +367,7 @@
     background-color: #f7f7f7;
     cursor: pointer;
     box-sizing: border-box;
+    width: 80px;
   }
 }
 

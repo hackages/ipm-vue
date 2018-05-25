@@ -11,7 +11,7 @@
     </div>
     <div @click="togglekmMiles"
          :class="onMiles ? 'borderblue' : 'bordergrey'">
-      <div class="fontbutton">{{onMiles ? 'Miles' : 'Km'}}</div>
+      <div class="fontbutton">{{onMiles ? 'MILES' : 'KM'}}</div>
     </div>
 
   </div>
