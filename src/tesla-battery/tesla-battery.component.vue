@@ -2,6 +2,8 @@
   <form class="tesla-battery">
     <h1>{{ title }}</h1>
     <tesla-car :wheelsize="tesla.wheels"
+               :window="tesla.window"
+               :light="tesla.light"
                :speed="tesla.speed" />
     <tesla-stats :stats="statsBis" />
     <div class="tesla-controls cf">
@@ -24,6 +26,12 @@
       </div>
       <tesla-wheels v-model="tesla.wheels" />
     </div>
+    <tesla-panel :toggleWindow="toggleWindow"
+                 :toggleLight="toggleLight"
+                 :togglekmMiles="togglekmMiles"
+                 :window="tesla.window"
+                 :light="tesla.light"
+                 :onMiles="tesla.onMiles" />
     <div class="tesla-battery__notice">
       <p>
         The actual amount of range that you experience will vary based on your particular use conditions. See how particular use conditions may affect your range in our simulation model.
@@ -41,8 +49,10 @@ import TeslaClimate from './components/tesla-climate.component';
 import TeslaCounter from './components/tesla-counter.component';
 import TeslaStats from './components/tesla-stats.component';
 import TeslaWheels from './components/tesla-wheels.component';
-
+import TeslaPanel from './components/tesla-panel.component';
 import teslaService from './tesla-battery.service';
+
+import {debounce} from 'lodash';
 
 export default {
   name: 'tesla-battery',
@@ -52,6 +62,7 @@ export default {
     TeslaCounter,
     TeslaStats,
     TeslaWheels,
+    TeslaPanel,
   },
   data() {
     return {
@@ -62,6 +73,9 @@ export default {
         temperature: 20,
         climate: true,
         wheels: 19,
+        window: false,
+        light: false,
+        onMiles: false,
       },
       metrics: [],
     };
@@ -114,6 +128,15 @@ export default {
       );
       return results;
     },
+    toggleWindow: debounce(function() {
+      this.tesla.window = !this.tesla.window;
+    }, 300),
+    toggleLight: debounce(function() {
+      this.tesla.light = !this.tesla.light;
+    }, 30),
+    togglekmMiles: debounce(function() {
+      this.tesla.onMiles = !this.tesla.onMiles;
+    }, 300),
   },
   watch: {
     results: {

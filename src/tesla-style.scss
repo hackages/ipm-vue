@@ -1,5 +1,4 @@
 @import 'styles.css';
-
 :host {
   display: block;
 }
@@ -55,8 +54,6 @@
 }
 
 .tesla-climate {
-  float: left;
-  width: 420px;
   padding: 0 40px;
   margin: 0 40px 0 0;
   border-left: 1px solid #ccc;
@@ -64,31 +61,124 @@
 }
 
 .tesla-controls {
-  display: block;
+  display: flex;
   width: 100%;
+  height: 100px;
 }
 
 @mixin prefix($property, $value) {
   $prefixes: (webkit moz ms o);
   @each $prefix in $prefixes {
     #{'-' + $prefix + '-' + $property}: $value;
-  }
-  // Output standard non-prefixed declaration
+  } // Output standard non-prefixed declaration
   #{$property}: $value;
 }
 
 .tesla-car {
+  min-height: 350px;
+}
+
+.car {
+  display: flex;
+  justify-content: center;
+}
+
+.tesla-outside {
   width: 100%;
   min-height: 350px;
-  background: #fff url(assets/tesla.jpg) no-repeat top center;
-  background-size: contain;
+  background: url(assets/cars/teslaOutside.png) no-repeat top center;
+  background-size: 895px;
+  position: absolute;
+  z-index: 3;
+}
+
+.tesla-windows {
+  width: 100%;
+  min-height: 350px;
+  background: url(assets/cars/teslaWindows.png) no-repeat top center;
+  background-size: 895px;
+  position: absolute;
+  z-index: 2;
+}
+
+.tesla-inside {
+  width: 100%;
+  min-height: 350px;
+  background: url(assets/cars/teslaInside.png) no-repeat top center;
+  background-size: 895px;
+  position: absolute;
+  z-index: 1;
+}
+
+.tesla-inside-light {
+  width: 100%;
+  min-height: 350px;
+  background: url(assets/cars/teslaInsideLight.png) no-repeat top center;
+  background-size: 895px;
+  position: absolute;
+}
+
+.light-off {
+  background-color: grey;
+  -webkit-mask: url(assets/icons/lightbulb.svg) no-repeat 50% 50%;
+  mask: url(assets/icons/lightbulb.svg) no-repeat 50% 50%;
+  padding: 10px;
+}
+
+.light-on {
+  background-color: #33a0ff;
+  -webkit-mask: url(assets/icons/lightbulbfull.svg) no-repeat 50% 50%;
+  mask: url(assets/icons/lightbulbfull.svg) no-repeat 50% 50%;
+  padding: 10px;
+}
+
+.window-on {
+  background-color: #33a0ff;
+  -webkit-mask: url(assets/icons/window-max.svg) no-repeat 50% 50%;
+  mask: url(assets/icons/window-max.svg) no-repeat 50% 50%;
+  padding: 10px;
+}
+
+.window-off {
+  background-color: grey;
+  -webkit-mask: url(assets/icons/window-min.svg) no-repeat 50% 50%;
+  mask: url(assets/icons/window-min.svg) no-repeat 50% 50%;
+  padding: 10px;
+}
+
+.light {
+  z-index: 1;
+}
+
+.fontbutton {
+  text-align: center;
+  font-weight: bold;
+  color: grey;
+  font-size: 8px;
+}
+
+.open {
+  @include prefix(animation, windows-open 3000ms forwards);
+}
+
+.close {
+  @include prefix(animation, windows-close 3000ms forwards);
 }
 
 .tesla-wheels {
   height: 247px;
   width: 555px;
+  position: absolute;
+  margin: auto;
+  z-index: 3;
+}
+
+.tesla-wheelsB {
+  height: 247px;
+  width: 555px;
   position: relative;
   margin: auto;
+  z-index: 3;
 }
 
 .tesla-wheel {
@@ -98,7 +188,7 @@
   position: absolute;
   background-repeat: no-repeat;
   background-position: 0 0;
-  background-size: cover;
+  background-size: contain;
   &--front {
     left: 652px;
   }
@@ -175,7 +265,6 @@
       }
     }
   }
-
   &--19 {
     &--45 {
       background-image: url(assets/wheel-19.png);
@@ -248,8 +337,49 @@
   }
 }
 
+@keyframes windows-open {
+  from {
+    @include prefix(transform, translate(0, 0));
+  }
+  to {
+    @include prefix(transform, translate(0, 50px));
+  }
+}
+
+@keyframes windows-close {
+  from {
+    @include prefix(transform, translate(0, 50px));
+  }
+  to {
+    @include prefix(transform, translate(0, 0));
+  }
+}
+
+.option {
+  position: absolute;
+  top: 150px;
+  right: 150px;
+  z-index: 4;
+  >div {
+    padding: 20px;
+    margin: 10px;
+    background-color: #f7f7f7;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+}
+
+.borderblue {
+  border: 1px solid #33a0ff;
+  box-shadow: inset 0px 0px 0px 1px #39f;
+}
+
+.bordergrey {
+  border: 1px solid #ccc;
+}
+
 .tesla-climate {
-  float: left;
+  display: flex;
   &__item {
     cursor: pointer;
     display: inline-block;
@@ -311,7 +441,7 @@
 }
 
 .tesla-counter {
-  float: left;
+  margin-right: 40px;
   width: 230px;
   &__title {
     letter-spacing: 2px;
@@ -319,7 +449,7 @@
   }
   &__container {
     margin: 10px 0 0;
-    padding-right: 40px;
+    width: 200px;
     input[type='number'] {
       border: 0;
       clip: rect(0 0 0 0);
@@ -396,7 +526,7 @@
 }
 
 .tesla-stats {
-  margin: -70px 0 30px;
+  margin: 0px 0 30px;
   ul {
     text-align: center;
     li {

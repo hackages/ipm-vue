@@ -1,5 +1,5 @@
 <template>
-  <div class="tesla-wheels">
+  <div class="tesla-wheelsB">
     <p class="tesla-wheels__title">Wheels</p>
     <div class="tesla-wheels__container cf">
       <label
