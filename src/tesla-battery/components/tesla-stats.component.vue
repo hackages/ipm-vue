@@ -4,7 +4,7 @@
       <li v-for="stat in stats"
           :key="stat.model">
         <div :class="'tesla-stats-icon tesla-stats-icon--'+stat.model |  lowercase"></div>
-        <p>{{ stat.miles | km }}</p>
+        <p>{{ stat.miles | km }}<span>KM</span></p>
       </li>
     </ul>
   </div>
