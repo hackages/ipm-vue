@@ -4,23 +4,25 @@
     <tesla-car :wheelsize="tesla.wheels"
                :window="tesla.window"
                :light="tesla.light"
-               :speed="tesla.speed" />
-    <tesla-stats :stats="statsBis" />
+               :speed="tesla.speed.value"
+               :unit="options.unit" />
+    <tesla-stats :stats="stats"
+                 :unit="options.unit" />
     <div class="tesla-controls cf">
       <tesla-counter :title="'Speed'"
-                     :unit="'kmh'"
-                     :step="10"
-                     :min="70"
-                     :max="140"
-                     v-model="tesla.speed" />
+                     :unit="tesla.speed.unit"
+                     :step="tesla.speed.step"
+                     :min="tesla.speed.min"
+                     :max="tesla.speed.max"
+                     v-model="tesla.speed.value" />
       <div class="tesla-climate cf">
         <tesla-counter :title="'Outside Temperature'"
-                       :unit="'°'"
-                       :step="10"
-                       :min="-10"
-                       :max="40"
-                       v-model="tesla.temperature" />
-        <tesla-climate :limit="tesla.temperature > 10"
+                       :unit="tesla.temperature.unit"
+                       :step="tesla.temperature.step"
+                       :min="tesla.temperature.min"
+                       :max="tesla.temperature.max"
+                       v-model="tesla.temperature.value" />
+        <tesla-climate :limit="tesla.temperature.value > 10"
                        :value="tesla.climate"
                        :onClick="changeClimate" />
       </div>
@@ -28,10 +30,11 @@
     </div>
     <tesla-panel :toggleWindow="toggleWindow"
                  :toggleLight="toggleLight"
-                 :togglekmMiles="togglekmMiles"
+                 :toggleKmMiles="toggleKmMiles"
                  :window="tesla.window"
                  :light="tesla.light"
-                 :onMiles="tesla.onMiles" />
+                 :onMiles="onMiles"
+                 :unit="options.unit" />
     <div class="tesla-battery__notice">
       <p>
         The actual amount of range that you experience will vary based on your particular use conditions. See how particular use conditions may affect your range in our simulation model.
@@ -50,9 +53,24 @@ import TeslaCounter from './components/tesla-counter.component';
 import TeslaStats from './components/tesla-stats.component';
 import TeslaWheels from './components/tesla-wheels.component';
 import TeslaPanel from './components/tesla-panel.component';
-import teslaService from './tesla-battery.service';
 
 import {debounce} from 'lodash';
+
+const defaultKmh = {
+  value: 70,
+  step: 10,
+  min: 70,
+  max: 140,
+  unit: 'kmh',
+};
+
+const defaultMph = {
+  value: 45,
+  step: 5,
+  min: 40,
+  max: 70,
+  unit: 'mph',
+};
 
 export default {
   name: 'tesla-battery',
@@ -67,58 +85,61 @@ export default {
   data() {
     return {
       title: 'Ranger Per Charge',
-      results: ['75', '75D', '90D', 'P100D'],
+      models: ['75', '75D', '90D', 'P100D'],
+      options: {
+        models: ['75', '75D', '90D', 'P100D'],
+        unit: 'KM',
+      },
       tesla: {
-        speed: 70,
-        temperature: 20,
+        speed: {
+          value: 70,
+          step: 10,
+          min: 70,
+          max: 140,
+          unit: 'kmh',
+        },
+        temperature: {
+          value: 20,
+          min: -10,
+          max: 40,
+          step: 10,
+          unit: '°',
+        },
         climate: true,
         wheels: 19,
-        window: false,
+        window: '',
         light: false,
-        onMiles: false,
       },
       metrics: [],
     };
   },
   computed: {
-    models() {
-      return teslaService.getModelData();
-    },
     stats() {
-      return this.results.map(model => {
-        const {speed, temperature, climate, wheels} = this.tesla;
-        const miles = this.models[model][wheels][climate ? 'on' : 'off'].speed[
-          speed
-        ][temperature];
-        return {
-          model,
-          miles,
-        };
-      });
-    },
-    statsBis() {
       return this.metrics.map(({model, metrics}) => {
         const {speed, temperature, climate, wheels} = this.tesla;
         const miles = metrics
-          .filter(metric => metric.temp === temperature)
+          .filter(metric => metric.temp === temperature.value)
           .filter(metric => metric.wheelsize === wheels)
           .filter(metric => metric.ac === (climate ? 'on' : 'off'))[0]
-          .hwy.filter(hwy => hwy.mph === speed)[0].miles;
+          .hwy.filter(hwy => hwy.mph === speed.value)[0].miles;
         return {
           model,
           miles,
         };
       });
+    },
+    onMiles() {
+      return this.options.unit === 'MI';
     },
   },
   methods: {
     changeClimate() {
       this.tesla.climate = !this.tesla.climate;
     },
-    getStats() {
+    getStats(fileName) {
       const results = Promise.all(
-        this.results.map(model => {
-          return import(`../assets/mocks/metric${model}Miles.json`).then(
+        this.models.map(model => {
+          return import(`../assets/mocks/${fileName}${model}Miles.json`).then(
             metrics => ({
               model,
               metrics,
@@ -129,21 +150,23 @@ export default {
       return results;
     },
     toggleWindow: debounce(function() {
-      this.tesla.window = !this.tesla.window;
+      this.tesla.window = this.tesla.window === 'open' ? 'close' : 'open';
     }, 300),
     toggleLight: debounce(function() {
       this.tesla.light = !this.tesla.light;
-    }, 30),
-    togglekmMiles: debounce(function() {
-      this.tesla.onMiles = !this.tesla.onMiles;
+    }, 300),
+    toggleKmMiles: debounce(function() {
+      this.options.unit = this.onMiles ? 'KM' : 'MI';
     }, 300),
   },
   watch: {
-    results: {
+    options: {
       immediate: true,
       async handler() {
-        this.metrics = await this.getStats();
+        this.metrics = await this.getStats(this.onMiles ? 'hybrid' : 'metric');
+        this.tesla.speed = this.onMiles ? defaultMph : defaultKmh;
       },
+      deep: true,
     },
   },
 };

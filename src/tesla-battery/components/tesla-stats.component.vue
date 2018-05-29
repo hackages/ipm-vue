@@ -4,7 +4,9 @@
       <li v-for="stat in stats"
           :key="stat.model">
         <div :class="'tesla-stats-icon tesla-stats-icon--'+stat.model |  lowercase"></div>
-        <p>{{ stat.miles}}</p>
+        <p>{{stat.miles}}
+          <span class="unit">{{unit}}</span>
+        </p>
       </li>
     </ul>
   </div>
@@ -18,13 +20,14 @@ export default {
       type: Array,
       required: true,
     },
+    unit: {
+      type: String,
+      required: true,
+    },
   },
   filters: {
     lowercase(value) {
       return !value ? '' : value.toLowerCase();
-    },
-    km(value) {
-      return Math.floor(value * 1.609344);
     },
   },
 };

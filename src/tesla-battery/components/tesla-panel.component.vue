@@ -1,19 +1,17 @@
 <template>
-  <div class="option">
-
+  <div class="panel-options">
     <div @click="toggleLight"
          :class="light ? 'borderblue' : 'bordergrey'">
       <div :class="light ? 'light-on' : 'light-off'"></div>
     </div>
     <div @click="toggleWindow"
-         :class="window ? 'borderblue' : 'bordergrey'">
-      <div :class="window ? 'window-on' : 'window-off'"></div>
+         :class="window === 'open' ? 'borderblue' : 'bordergrey'">
+      <div :class="`window-${window || 'close'}`"></div>
     </div>
-    <div @click="togglekmMiles"
+    <div @click="toggleKmMiles"
          :class="onMiles ? 'borderblue' : 'bordergrey'">
-      <div class="fontbutton">{{onMiles ? 'MILES' : 'KM'}}</div>
+      <div class="fontbutton">{{unit}}</div>
     </div>
-
   </div>
 </template>
 
@@ -29,7 +27,7 @@ export default {
       required: true,
       type: Function,
     },
-    togglekmMiles: {
+    toggleKmMiles: {
       required: true,
       type: Function,
     },
@@ -38,14 +36,17 @@ export default {
       required: true,
     },
     window: {
-      type: Boolean,
+      type: String,
       required: true,
     },
     onMiles: {
       type: Boolean,
+      require: true,
+    },
+    unit: {
+      type: String,
       required: true,
     },
   },
 };
 </script>
-∏

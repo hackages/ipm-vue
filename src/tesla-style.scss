@@ -132,14 +132,14 @@
   padding: 10px;
 }
 
-.window-on {
+.window-open {
   background-color: #33a0ff;
   -webkit-mask: url(assets/icons/window-max.svg) no-repeat 50% 50%;
   mask: url(assets/icons/window-max.svg) no-repeat 50% 50%;
   padding: 10px;
 }
 
-.window-off {
+.window-close {
   background-color: grey;
   -webkit-mask: url(assets/icons/window-min.svg) no-repeat 50% 50%;
   mask: url(assets/icons/window-min.svg) no-repeat 50% 50%;
@@ -196,7 +196,7 @@
   &--rear {
     right: -26px;
   }
-  &--km {
+  &--KM {
     &--19 {
       &--70 {
         background-image: url(assets/wheel-19.png);
@@ -266,56 +266,66 @@
       }
     }
   }
-  &--19 {
-    &--45 {
-      background-image: url(assets/wheel-19.png);
-      @include prefix(animation, infinite-spinning 230ms steps(6) infinite);
+  &--MI {
+    &--19 {
+      &--40 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 260ms steps(6) infinite);
+      }
+      &--45 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 230ms steps(6) infinite);
+      }
+      &--50 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 200ms steps(6) infinite);
+      }
+      &--55 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 170ms steps(6) infinite);
+      }
+      &--60 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 140ms steps(6) infinite);
+      }
+      &--65 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 110ms steps(6) infinite);
+      }
+      &--70 {
+        background-image: url(assets/wheel-19.png);
+        @include prefix(animation, infinite-spinning 80ms steps(6) infinite);
+      }
     }
-    &--50 {
-      background-image: url(assets/wheel-19.png);
-      @include prefix(animation, infinite-spinning 200ms steps(6) infinite);
-    }
-    &--55 {
-      background-image: url(assets/wheel-19.png);
-      @include prefix(animation, infinite-spinning 170ms steps(6) infinite);
-    }
-    &--60 {
-      background-image: url(assets/wheel-19.png);
-      @include prefix(animation, infinite-spinning 140ms steps(6) infinite);
-    }
-    &--65 {
-      background-image: url(assets/wheel-19.png);
-      @include prefix(animation, infinite-spinning 110ms steps(6) infinite);
-    }
-    &--70 {
-      background-image: url(assets/wheel-19.png);
-      @include prefix(animation, infinite-spinning 80ms steps(6) infinite);
-    }
-  }
-  &--21 {
-    &--45 {
-      background-image: url(assets/wheel-21.png);
-      @include prefix(animation, infinite-spinning 480ms steps(12) infinite);
-    }
-    &--50 {
-      background-image: url(assets/wheel-21.png);
-      @include prefix(animation, infinite-spinning 400ms steps(12) infinite);
-    }
-    &--55 {
-      background-image: url(assets/wheel-21.png);
-      @include prefix(animation, infinite-spinning 320ms steps(12) infinite);
-    }
-    &--60 {
-      background-image: url(assets/wheel-21.png);
-      @include prefix(animation, infinite-spinning 240ms steps(12) infinite);
-    }
-    &--65 {
-      background-image: url(assets/wheel-21.png);
-      @include prefix(animation, infinite-spinning 160ms steps(12) infinite);
-    }
-    &--70 {
-      background-image: url(assets/wheel-21.png);
-      @include prefix(animation, infinite-spinning 80ms steps(12) infinite);
+    &--21 {
+      &--40 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 560ms steps(12) infinite);
+      }
+      &--45 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 480ms steps(12) infinite);
+      }
+      &--50 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 400ms steps(12) infinite);
+      }
+      &--55 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 320ms steps(12) infinite);
+      }
+      &--60 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 240ms steps(12) infinite);
+      }
+      &--65 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 160ms steps(12) infinite);
+      }
+      &--70 {
+        background-image: url(assets/wheel-21.png);
+        @include prefix(animation, infinite-spinning 80ms steps(12) infinite);
+      }
     }
   }
 }
@@ -356,18 +366,18 @@
   }
 }
 
-.option {
+.panel-options {
   position: absolute;
   top: 150px;
   right: 150px;
   z-index: 4;
-  >div {
+  > div {
     padding: 20px;
     margin: 10px;
     background-color: #f7f7f7;
     cursor: pointer;
     box-sizing: border-box;
-    width: 80px;
+    width: 70px;
   }
 }
 
@@ -544,11 +554,10 @@
         position: relative;
         color: #008dff;
         text-align: right;
-        &:after {
+        .unit {
           font-size: 14px;
           font-weight: normal;
           font-family: 'RobotoNormal';
-          content: 'KM';
           position: absolute;
           top: 8px;
           right: 10;
