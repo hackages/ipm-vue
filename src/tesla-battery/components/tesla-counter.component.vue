@@ -1,15 +1,27 @@
 <template>
   <div class="tesla-counter">
-    <p class="tesla-counter__title" v-once>{{ title }}</p>
+    <p class="tesla-counter__title"
+       v-once>{{ title }}</p>
     <div class="tesla-counter__container cf">
-      <div class="tesla-counter__item" tabindex="0" @blur.stop.prevent="onBlur" @keydown.stop.prevent="onKeyUp" @focus.stop.prevent="onFocus">
+      <div class="tesla-counter__item"
+           tabindex="0"
+           @blur.stop.prevent="onBlur"
+           @keydown.stop.prevent="onKeyUp"
+           @focus.stop.prevent="onFocus">
         <p class="tesla-counter__number">
           {{ kmhOrMph }}
           <span>{{ unit }}</span>
         </p>
-        <div class="tesla-counter__controls" tabindex="-1">
-          <button tabindex="-1" type="button" @click="increment" :disabled="value === max"></button>
-          <button tabindex="-1" type="button" @click="decrement" :disabled="value === min"></button>
+        <div class="tesla-counter__controls"
+             tabindex="-1">
+          <button tabindex="-1"
+                  type="button"
+                  @click="increment"
+                  :disabled="value === max"></button>
+          <button tabindex="-1"
+                  type="button"
+                  @click="decrement"
+                  :disabled="value === min"></button>
         </div>
       </div>
     </div>

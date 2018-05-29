@@ -10,23 +10,23 @@
 </template>
 
 <script>
-    import TeslaBattery from './tesla-battery/tesla-battery.component';
+import TeslaBattery from './tesla-battery/tesla-battery.component';
 
-    import logo from './assets/logo.svg';
+import logo from './assets/logo.svg';
 
-    export default {
-        name: 'app',
-        components: {
-            TeslaBattery,
-        },
-        data() {
-            return {
-                logo
-            };
-        }
+export default {
+  name: 'app',
+  components: {
+    TeslaBattery,
+  },
+  data() {
+    return {
+      logo,
     };
+  },
+};
 </script>
 
 <style lang="scss">
-    @import 'tesla-style.scss';
+@import 'tesla-style.scss';
 </style>
