@@ -3,15 +3,19 @@
     <h1>{{ title }}</h1>
 
     <!-- TeslaCarComponent -->
-    <tesla-car :wheels="wheels.value" :speed="speed.value" />
+    <tesla-car :wheels="wheels.value"
+               :speed="speed.value" />
     <!-- End TeslaCarComponent -->
 
     <!-- TeslaStatsComponent -->
     <div class="tesla-stats">
       <ul>
-        <li v-for="stat in stats" :key="stat.model">
+        <li v-for="stat in stats"
+            :key="stat.model">
           <div :class="'tesla-stats-icon tesla-stats-icon--'+stat.model |  lowercase"></div>
-          <p>{{ stat.miles | km }}</p>
+          <p>{{ stat.miles | km }}
+            <span>KM</span>
+          </p>
         </li>
       </ul>
     </div>
@@ -23,14 +27,25 @@
       <div class="tesla-counter">
         <p class="tesla-counter__title">Speed</p>
         <div class="tesla-counter__container cf">
-          <div class="tesla-counter__item" tabindex="0" @blur.stop.prevent="onBlurSpeed" @keydown.stop.prevent="onKeyUpSpeed" @focus.stop.prevent="onFocusSpeed">
+          <div class="tesla-counter__item"
+               tabindex="0"
+               @blur.stop.prevent="onBlurSpeed"
+               @keydown.stop.prevent="onKeyUpSpeed"
+               @focus.stop.prevent="onFocusSpeed">
             <p class="tesla-counter__number">
               {{speed.value | km}}
               <span>kmh</span>
             </p>
-            <div class="tesla-counter__controls" tabindex="-1">
-              <button tabindex="-1" type="button" @click="incrementSpeed" :disabled="speed.value === speed.max"></button>
-              <button tabindex="-1" type="button" @click="decrementSpeed" :disabled="speed.value === speed.min"></button>
+            <div class="tesla-counter__controls"
+                 tabindex="-1">
+              <button tabindex="-1"
+                      type="button"
+                      @click="incrementSpeed"
+                      :disabled="speed.value === speed.max"></button>
+              <button tabindex="-1"
+                      type="button"
+                      @click="decrementSpeed"
+                      :disabled="speed.value === speed.min"></button>
             </div>
           </div>
         </div>
@@ -43,14 +58,25 @@
         <div class="tesla-counter">
           <p class="tesla-counter__title">Outside Temperature</p>
           <div class="tesla-counter__container cf">
-            <div class="tesla-counter__item" tabindex="0" @blur.stop.prevent="onBlurTemperature" @keydown.stop.prevent="onKeyUpTemperature" @focus.stop.prevent="onFocusTemperature">
+            <div class="tesla-counter__item"
+                 tabindex="0"
+                 @blur.stop.prevent="onBlurTemperature"
+                 @keydown.stop.prevent="onKeyUpTemperature"
+                 @focus.stop.prevent="onFocusTemperature">
               <p class="tesla-counter__number">
                 {{temperature.value}}
                 <span>°</span>
               </p>
-              <div class="tesla-counter__controls" tabindex="-1">
-                <button tabindex="-1" type="button" @click="incrementTemperature" :disabled="temperature.value === temperature.max"></button>
-                <button tabindex="-1" type="button" @click="decrementTemperature" :disabled="temperature.value === temperature.min"></button>
+              <div class="tesla-counter__controls"
+                   tabindex="-1">
+                <button tabindex="-1"
+                        type="button"
+                        @click="incrementTemperature"
+                        :disabled="temperature.value === temperature.max"></button>
+                <button tabindex="-1"
+                        type="button"
+                        @click="decrementTemperature"
+                        :disabled="temperature.value === temperature.min"></button>
               </div>
             </div>
           </div>
@@ -59,10 +85,16 @@
 
         <!-- TeslaClimateComponent -->
         <div>
-          <label class="tesla-climate__item" :class="{'tesla-heat' :limitHeat, 'tesla-climate__item--active': climate.value, 'tesla-climate__item--focused': climate.focused === climate.value}">
+          <label class="tesla-climate__item"
+                 :class="{'tesla-heat' :limitHeat, 'tesla-climate__item--active': climate.value, 'tesla-climate__item--focused': climate.focused === climate.value}">
             <p class="heat">{{ (limitHeat ? 'ac' : 'heat') }} {{ climate.value ? 'on' : 'off' }}</p>
             <i class="tesla-climate__icon"></i>
-            <input type="checkbox" name="climate" :checked="climate.value" @click="changeClimate" @blur="onBlurClimate" @focus="onFocusClimate">
+            <input type="checkbox"
+                   name="climate"
+                   :checked="climate.value"
+                   @click="changeClimate"
+                   @blur="onBlurClimate"
+                   @focus="onFocusClimate">
           </label>
         </div>
         <!-- End TeslaClimateComponent -->
@@ -73,8 +105,16 @@
       <div class="tesla-wheels">
         <p class="tesla-wheels__title">Wheels</p>
         <div class="tesla-wheels__container cf">
-          <label v-for="size in wheels.sizes" :key="size" :class="[{'tesla-wheels__item--active' : (wheels.value === size), 'tesla-wheels__item--focused': (wheels.focused === size),'tesla-wheels__item': true}, `tesla-wheels__item--${size}`]">
-            <input type="radio" name="wheelsize" :value="size" @blur="onBlurWheels" @click="changeWheelSize(size)" @focus="onFocusWheels(size)" :checked="wheels.value === size">
+          <label v-for="size in wheels.sizes"
+                 :key="size"
+                 :class="[{'tesla-wheels__item--active' : (wheels.value === size), 'tesla-wheels__item--focused': (wheels.focused === size),'tesla-wheels__item': true}, `tesla-wheels__item--${size}`]">
+            <input type="radio"
+                   name="wheelsize"
+                   :value="size"
+                   @blur="onBlurWheels"
+                   @click="changeWheelSize(size)"
+                   @focus="onFocusWheels(size)"
+                   :checked="wheels.value === size">
             <p>
               {{ size }}"
             </p>

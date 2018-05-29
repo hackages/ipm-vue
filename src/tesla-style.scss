@@ -341,11 +341,10 @@
         position: relative;
         color: #008dff;
         text-align: right;
-        &:after {
+        span {
           font-size: 14px;
           font-weight: normal;
           font-family: 'RobotoNormal';
-          content: 'KM';
           position: absolute;
           top: 8px;
           right: 10;
