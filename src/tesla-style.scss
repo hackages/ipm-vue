@@ -132,14 +132,14 @@
   padding: 10px;
 }
 
-.window-open {
+.window-down {
   background-color: #33a0ff;
   -webkit-mask: url(assets/icons/window-max.svg) no-repeat 50% 50%;
   mask: url(assets/icons/window-max.svg) no-repeat 50% 50%;
   padding: 10px;
 }
 
-.window-close {
+.window-up {
   background-color: grey;
   -webkit-mask: url(assets/icons/window-min.svg) no-repeat 50% 50%;
   mask: url(assets/icons/window-min.svg) no-repeat 50% 50%;
@@ -158,11 +158,11 @@
   margin: 0;
 }
 
-.open {
+.down {
   @include prefix(animation, windows-open 3000ms forwards);
 }
 
-.close {
+.up {
   @include prefix(animation, windows-close 3000ms forwards);
 }
 
@@ -554,7 +554,7 @@
         position: relative;
         color: #008dff;
         text-align: right;
-        .unit {
+        span {
           font-size: 14px;
           font-weight: normal;
           font-family: 'RobotoNormal';

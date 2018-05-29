@@ -5,8 +5,8 @@
       <div :class="light ? 'light-on' : 'light-off'"></div>
     </div>
     <div @click="toggleWindow"
-         :class="window === 'open' ? 'borderblue' : 'bordergrey'">
-      <div :class="`window-${window || 'close'}`"></div>
+         :class="window === 'down' ? 'borderblue' : 'bordergrey'">
+      <div :class="`window-${window || 'up'}`"></div>
     </div>
     <div @click="toggleKmMiles"
          :class="onMiles ? 'borderblue' : 'bordergrey'">
@@ -36,7 +36,9 @@ export default {
       required: true,
     },
     window: {
-      type: String,
+      validator: function(val) {
+        return val === null || typeof val === 'string';
+      },
       required: true,
     },
     onMiles: {

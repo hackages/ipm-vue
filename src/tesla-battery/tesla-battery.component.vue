@@ -107,7 +107,7 @@ export default {
         },
         climate: true,
         wheels: 19,
-        window: '',
+        window: null,
         light: false,
       },
       metrics: [],
@@ -116,11 +116,13 @@ export default {
   computed: {
     stats() {
       return this.metrics.map(({model, metrics}) => {
-        const {speed, temperature, climate, wheels} = this.tesla;
+        const {speed, temperature, climate, wheels, window, light} = this.tesla;
         const miles = metrics
           .filter(metric => metric.temp === temperature.value)
           .filter(metric => metric.wheelsize === wheels)
-          .filter(metric => metric.ac === (climate ? 'on' : 'off'))[0]
+          .filter(metric => metric.ac === (climate ? 'on' : 'off'))
+          .filter(metric => metric.lights === (light ? 'on' : 'off'))
+          .filter(metric => metric.windows === (window || 'up'))[0]
           .hwy.filter(hwy => hwy.mph === speed.value)[0].miles;
         return {
           model,
@@ -150,7 +152,7 @@ export default {
       return results;
     },
     toggleWindow: debounce(function() {
-      this.tesla.window = this.tesla.window === 'open' ? 'close' : 'open';
+      this.tesla.window = this.tesla.window === 'down' ? 'up' : 'down';
     }, 300),
     toggleLight: debounce(function() {
       this.tesla.light = !this.tesla.light;

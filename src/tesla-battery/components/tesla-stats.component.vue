@@ -5,7 +5,7 @@
           :key="stat.model">
         <div :class="'tesla-stats-icon tesla-stats-icon--'+stat.model |  lowercase"></div>
         <p>{{stat.miles}}
-          <span class="unit">{{unit}}</span>
+          <span>{{unit}}</span>
         </p>
       </li>
     </ul>

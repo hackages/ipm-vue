@@ -31,7 +31,9 @@ export default {
       required: true,
     },
     window: {
-      type: String,
+      validator: function(val) {
+        return val === null || typeof val === 'string';
+      },
       required: true,
     },
     unit: {
