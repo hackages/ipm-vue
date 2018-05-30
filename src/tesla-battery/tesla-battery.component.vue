@@ -91,13 +91,7 @@ export default {
         unit: 'KM',
       },
       tesla: {
-        speed: {
-          value: 70,
-          step: 10,
-          min: 70,
-          max: 140,
-          unit: 'kmh',
-        },
+        speed: defaultKmh,
         temperature: {
           value: 20,
           min: -10,
