@@ -1,15 +1,12 @@
 <template>
   <div class="panel-options">
-    <div @click="toggleLight"
-         :class="light ? 'borderblue' : 'bordergrey'">
+    <div :class="light ? 'borderblue' : 'bordergrey'">
       <div :class="light ? 'light-on' : 'light-off'"></div>
     </div>
-    <div @click="toggleWindow"
-         :class="window === 'down' ? 'borderblue' : 'bordergrey'">
+    <div :class="window === 'down' ? 'borderblue' : 'bordergrey'">
       <div :class="`window-${window || 'up'}`"></div>
     </div>
-    <div @click="toggleKmMiles"
-         :class="onMiles ? 'borderblue' : 'bordergrey'">
+    <div :class="onMiles ? 'borderblue' : 'bordergrey'">
       <div class="fontbutton">{{unit}}</div>
     </div>
   </div>
@@ -19,18 +16,6 @@
 export default {
   name: 'tesla-panel',
   props: {
-    toggleWindow: {
-      required: true,
-      type: Function,
-    },
-    toggleLight: {
-      required: true,
-      type: Function,
-    },
-    toggleKmMiles: {
-      required: true,
-      type: Function,
-    },
     light: {
       type: Boolean,
       required: true,
@@ -43,7 +28,7 @@ export default {
     },
     onMiles: {
       type: Boolean,
-      require: true,
+      default: false,
     },
     unit: {
       type: String,

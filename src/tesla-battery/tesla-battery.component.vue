@@ -28,12 +28,8 @@
       </div>
       <tesla-wheels v-model="tesla.wheels" />
     </div>
-    <tesla-panel :toggleWindow="toggleWindow"
-                 :toggleLight="toggleLight"
-                 :toggleKmMiles="toggleKmMiles"
-                 :window="tesla.window"
+    <tesla-panel :window="tesla.window"
                  :light="tesla.light"
-                 :onMiles="onMiles"
                  :unit="options.unit" />
     <div class="tesla-battery__notice">
       <p>
@@ -46,6 +42,7 @@
   </form>
 </template>
 
+
 <script>
 import TeslaCar from './components/tesla-car.component';
 import TeslaClimate from './components/tesla-climate.component';
@@ -54,23 +51,7 @@ import TeslaStats from './components/tesla-stats.component';
 import TeslaWheels from './components/tesla-wheels.component';
 import TeslaPanel from './components/tesla-panel.component';
 
-import {debounce} from 'lodash';
-
-const defaultKmh = {
-  value: 70,
-  step: 10,
-  min: 70,
-  max: 140,
-  unit: 'kmh',
-};
-
-const defaultMph = {
-  value: 45,
-  step: 5,
-  min: 40,
-  max: 70,
-  unit: 'mph',
-};
+import teslaService from './tesla-battery.service';
 
 export default {
   name: 'tesla-battery',
@@ -85,18 +66,17 @@ export default {
   data() {
     return {
       title: 'Ranger Per Charge',
-      models: ['75', '75D', '90D', 'P100D'],
       options: {
         models: ['75', '75D', '90D', 'P100D'],
-        unit: 'KM',
+        unit: 'MI',
       },
       tesla: {
         speed: {
-          value: 70,
-          step: 10,
-          min: 70,
-          max: 140,
-          unit: 'kmh',
+          value: 45,
+          step: 5,
+          min: 45,
+          max: 70,
+          unit: 'mph',
         },
         temperature: {
           value: 20,
@@ -114,61 +94,29 @@ export default {
     };
   },
   computed: {
+    models() {
+      return teslaService.getModelData();
+    },
     stats() {
-      return this.metrics.map(({model, metrics}) => {
-        const {speed, temperature, climate, wheels, window, light} = this.tesla;
-        const miles = metrics
-          .filter(metric => metric.temp === temperature.value)
-          .filter(metric => metric.wheelsize === wheels)
-          .filter(metric => metric.ac === (climate ? 'on' : 'off'))
-          .filter(metric => metric.lights === (light ? 'on' : 'off'))
-          .filter(metric => metric.windows === (window || 'up'))[0]
-          .hwy.filter(hwy => hwy.mph === speed.value)[0].miles;
+      // refactor the stats for the new data
+      return this.options.models.map(model => {
+        const {speed, temperature, climate, wheels} = this.tesla;
+        const miles = this.models[model][wheels][climate ? 'on' : 'off'].speed[
+          speed.value
+        ][temperature.value];
         return {
           model,
           miles,
         };
       });
     },
-    onMiles() {
-      return this.options.unit === 'MI';
-    },
   },
   methods: {
     changeClimate() {
       this.tesla.climate = !this.tesla.climate;
     },
-    getStats(fileName) {
-      const results = Promise.all(
-        this.models.map(model => {
-          return import(`../assets/mocks/${fileName}${model}Miles.json`).then(
-            metrics => ({
-              model,
-              metrics,
-            })
-          );
-        })
-      );
-      return results;
-    },
-    toggleWindow: debounce(function() {
-      this.tesla.window = this.tesla.window === 'down' ? 'up' : 'down';
-    }, 300),
-    toggleLight: debounce(function() {
-      this.tesla.light = !this.tesla.light;
-    }, 300),
-    toggleKmMiles: debounce(function() {
-      this.options.unit = this.onMiles ? 'KM' : 'MI';
-    }, 300),
-  },
-  watch: {
-    options: {
-      immediate: true,
-      async handler() {
-        this.metrics = await this.getStats(this.onMiles ? 'hybrid' : 'metric');
-        this.tesla.speed = this.onMiles ? defaultMph : defaultKmh;
-      },
-      deep: true,
+    getStats() {
+      // fetch the mocks with import() and for the differents models you need
     },
   },
 };
