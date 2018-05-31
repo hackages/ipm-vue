@@ -85,7 +85,6 @@ export default {
   data() {
     return {
       title: 'Ranger Per Charge',
-      models: ['75', '75D', '90D', 'P100D'],
       options: {
         models: ['75', '75D', '90D', 'P100D'],
         unit: 'KM',
@@ -131,7 +130,7 @@ export default {
     },
     getStats(fileName) {
       const results = Promise.all(
-        this.models.map(model => {
+        this.options.models.map(model => {
           return import(`../assets/mocks/${fileName}${model}Miles.json`).then(
             metrics => ({
               model,
