@@ -1,38 +1,38 @@
 <template>
   <form class="tesla-battery">
     <h1>{{ title }}</h1>
-    <tesla-car :wheelsize="tesla.wheels"
-               :window="tesla.window"
-               :light="tesla.light"
-               :speed="tesla.speed.value"
+    <tesla-car :wheelsize="wheels"
+               :window="window"
+               :light="light"
+               :speed="speed.value"
                :unit="options.unit" />
     <tesla-stats :stats="stats"
                  :unit="options.unit" />
     <div class="tesla-controls cf">
       <tesla-counter :title="'Speed'"
-                     :unit="tesla.speed.unit"
-                     :step="tesla.speed.step"
-                     :min="tesla.speed.min"
-                     :max="tesla.speed.max"
-                     v-model="tesla.speed.value" />
+                     :unit="speed.unit"
+                     :step="speed.step"
+                     :min="speed.min"
+                     :max="speed.max"
+                     v-model="speed.value" />
       <div class="tesla-climate cf">
         <tesla-counter :title="'Outside Temperature'"
-                       :unit="tesla.temperature.unit"
-                       :step="tesla.temperature.step"
-                       :min="tesla.temperature.min"
-                       :max="tesla.temperature.max"
-                       v-model="tesla.temperature.value" />
-        <tesla-climate :limit="tesla.temperature.value > 10"
-                       :value="tesla.climate"
+                       :unit="temperature.unit"
+                       :step="temperature.step"
+                       :min="temperature.min"
+                       :max="temperature.max"
+                       v-model="temperature.value" />
+        <tesla-climate :limit="temperature.value > 10"
+                       :value="climate"
                        :onClick="changeClimate" />
       </div>
-      <tesla-wheels v-model="tesla.wheels" />
+      <tesla-wheels v-model="wheels" />
     </div>
     <tesla-panel :toggleWindow="toggleWindow"
                  :toggleLight="toggleLight"
                  :toggleKmMiles="toggleKmMiles"
-                 :window="tesla.window"
-                 :light="tesla.light"
+                 :window="window"
+                 :light="light"
                  :onMiles="onMiles"
                  :unit="options.unit" />
     <div class="tesla-battery__notice">
@@ -90,34 +90,31 @@ export default {
         models: ['75', '75D', '90D', 'P100D'],
         unit: 'KM',
       },
-      tesla: {
-        speed: defaultKmh,
-        temperature: {
-          value: 20,
-          min: -10,
-          max: 40,
-          step: 10,
-          unit: '°',
-        },
-        climate: true,
-        wheels: 19,
-        window: null,
-        light: false,
+      speed: defaultKmh,
+      temperature: {
+        value: 20,
+        min: -10,
+        max: 40,
+        step: 10,
+        unit: '°',
       },
+      climate: true,
+      wheels: 19,
+      window: null,
+      light: false,
       metrics: [],
     };
   },
   computed: {
     stats() {
       return this.metrics.map(({model, metrics}) => {
-        const {speed, temperature, climate, wheels, window, light} = this.tesla;
         const miles = metrics
-          .filter(metric => metric.temp === temperature.value)
-          .filter(metric => metric.wheelsize === wheels)
-          .filter(metric => metric.ac === (climate ? 'on' : 'off'))
-          .filter(metric => metric.lights === (light ? 'on' : 'off'))
-          .filter(metric => metric.windows === (window || 'up'))[0]
-          .hwy.filter(hwy => hwy.mph === speed.value)[0].miles;
+          .filter(metric => metric.temp === this.temperature.value)
+          .filter(metric => metric.wheelsize === this.wheels)
+          .filter(metric => metric.ac === (this.climate ? 'on' : 'off'))
+          .filter(metric => metric.lights === (this.light ? 'on' : 'off'))
+          .filter(metric => metric.windows === (this.window || 'up'))[0]
+          .hwy.filter(hwy => hwy.mph === this.speed.value)[0].miles;
         return {
           model,
           miles,
@@ -130,7 +127,7 @@ export default {
   },
   methods: {
     changeClimate() {
-      this.tesla.climate = !this.tesla.climate;
+      this.climate = !this.climate;
     },
     getStats(fileName) {
       const results = Promise.all(
@@ -146,10 +143,10 @@ export default {
       return results;
     },
     toggleWindow: debounce(function() {
-      this.tesla.window = this.tesla.window === 'down' ? 'up' : 'down';
+      this.window = this.window === 'down' ? 'up' : 'down';
     }, 300),
     toggleLight: debounce(function() {
-      this.tesla.light = !this.tesla.light;
+      this.light = !this.light;
     }, 300),
     toggleKmMiles: debounce(function() {
       this.options.unit = this.onMiles ? 'KM' : 'MI';
@@ -160,7 +157,7 @@ export default {
       immediate: true,
       async handler() {
         this.metrics = await this.getStats(this.onMiles ? 'hybrid' : 'metric');
-        this.tesla.speed = this.onMiles ? defaultMph : defaultKmh;
+        this.speed = this.onMiles ? defaultMph : defaultKmh;
       },
       deep: true,
     },
