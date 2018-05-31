@@ -1,8 +1,8 @@
 <template>
   <form class="tesla-battery">
     <h1>{{ title }}</h1>
-    <tesla-car :wheelsize="tesla.wheels"
-               :speed="tesla.speed" />
+    <tesla-car :wheelsize="wheels"
+               :speed="speed" />
     <tesla-stats :stats="stats" />
     <div class="tesla-controls cf">
       <tesla-counter title="Speed"
@@ -10,19 +10,19 @@
                      :step="5"
                      :min="45"
                      :max="70"
-                     v-model="tesla.speed" />
+                     v-model="speed" />
       <div class="tesla-climate cf">
         <tesla-counter title="Outside Temperature"
                        unit="°"
                        :step="10"
                        :min="-10"
                        :max="40"
-                       v-model="tesla.temperature" />
-        <tesla-climate :limit="tesla.temperature > 10"
-                       :value="tesla.climate"
+                       v-model="temperature" />
+        <tesla-climate :limit="temperature > 10"
+                       :value="climate"
                        :onClick="changeClimate" />
       </div>
-      <tesla-wheels v-model="tesla.wheels" />
+      <tesla-wheels v-model="wheels" />
     </div>
     <div class="tesla-battery__notice">
       <p>
@@ -57,12 +57,10 @@ export default {
     return {
       title: 'Ranger Per Charge',
       results: ['60', '60D', '75', '75D', '90D', 'P100D'],
-      tesla: {
-        speed: 55,
-        temperature: 20,
-        climate: true,
-        wheels: 19,
-      },
+      speed: 55,
+      temperature: 20,
+      climate: true,
+      wheels: 19,
     };
   },
   computed: {
@@ -71,10 +69,9 @@ export default {
     },
     stats() {
       return this.results.map(model => {
-        const {speed, temperature, climate, wheels} = this.tesla;
-        const miles = this.models[model][wheels][climate ? 'on' : 'off'].speed[
-          speed
-        ][temperature];
+        const miles = this.models[model][this.wheels][
+          this.climate ? 'on' : 'off'
+        ].speed[this.speed][this.temperature];
         return {
           model,
           miles,
@@ -84,7 +81,7 @@ export default {
   },
   methods: {
     changeClimate() {
-      this.tesla.climate = !this.tesla.climate;
+      this.climate = !this.climate;
     },
   },
 };
