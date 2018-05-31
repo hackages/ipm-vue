@@ -1,35 +1,35 @@
 <template>
   <form class="tesla-battery">
     <h1>{{ title }}</h1>
-    <tesla-car :wheelsize="tesla.wheels"
-               :window="tesla.window"
-               :light="tesla.light"
-               :speed="tesla.speed.value"
+    <tesla-car :wheelsize="wheels"
+               :window="window"
+               :light="light"
+               :speed="speed.value"
                :unit="options.unit" />
     <tesla-stats :stats="stats"
                  :unit="options.unit" />
     <div class="tesla-controls cf">
       <tesla-counter :title="'Speed'"
-                     :unit="tesla.speed.unit"
-                     :step="tesla.speed.step"
-                     :min="tesla.speed.min"
-                     :max="tesla.speed.max"
-                     v-model="tesla.speed.value" />
+                     :unit="speed.unit"
+                     :step="speed.step"
+                     :min="speed.min"
+                     :max="speed.max"
+                     v-model="speed.value" />
       <div class="tesla-climate cf">
         <tesla-counter :title="'Outside Temperature'"
-                       :unit="tesla.temperature.unit"
-                       :step="tesla.temperature.step"
-                       :min="tesla.temperature.min"
-                       :max="tesla.temperature.max"
-                       v-model="tesla.temperature.value" />
-        <tesla-climate :limit="tesla.temperature.value > 10"
-                       :value="tesla.climate"
+                       :unit="temperature.unit"
+                       :step="temperature.step"
+                       :min="temperature.min"
+                       :max="temperature.max"
+                       v-model="temperature.value" />
+        <tesla-climate :limit="temperature.value > 10"
+                       :value="climate"
                        :onClick="changeClimate" />
       </div>
-      <tesla-wheels v-model="tesla.wheels" />
+      <tesla-wheels v-model="wheels" />
     </div>
-    <tesla-panel :window="tesla.window"
-                 :light="tesla.light"
+    <tesla-panel :window="window"
+                 :light="light"
                  :unit="options.unit" />
     <div class="tesla-battery__notice">
       <p>
@@ -70,26 +70,24 @@ export default {
         models: ['75', '75D', '90D', 'P100D'],
         unit: 'MI',
       },
-      tesla: {
-        speed: {
-          value: 45,
-          step: 5,
-          min: 45,
-          max: 70,
-          unit: 'mph',
-        },
-        temperature: {
-          value: 20,
-          min: -10,
-          max: 40,
-          step: 10,
-          unit: '°',
-        },
-        climate: true,
-        wheels: 19,
-        window: null,
-        light: false,
+      speed: {
+        value: 45,
+        step: 5,
+        min: 45,
+        max: 70,
+        unit: 'mph',
       },
+      temperature: {
+        value: 20,
+        min: -10,
+        max: 40,
+        step: 10,
+        unit: '°',
+      },
+      climate: true,
+      wheels: 19,
+      window: null,
+      light: false,
       metrics: [],
     };
   },
@@ -100,10 +98,9 @@ export default {
     stats() {
       // refactor the stats for the new data
       return this.options.models.map(model => {
-        const {speed, temperature, climate, wheels} = this.tesla;
-        const miles = this.models[model][wheels][climate ? 'on' : 'off'].speed[
-          speed.value
-        ][temperature.value];
+        const miles = this.models[model][this.wheels][
+          this.climate ? 'on' : 'off'
+        ].speed[this.speed.value][this.temperature.value];
         return {
           model,
           miles,
@@ -113,7 +110,7 @@ export default {
   },
   methods: {
     changeClimate() {
-      this.tesla.climate = !this.tesla.climate;
+      this.climate = !this.climate;
     },
     getStats() {
       // fetch the mocks with import() and for the differents models you need
