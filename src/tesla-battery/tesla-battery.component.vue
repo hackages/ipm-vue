@@ -5,9 +5,9 @@
                :window="window"
                :light="light"
                :speed="speed.value"
-               :unit="options.unit" />
+               :unit="unit" />
     <tesla-stats :stats="stats"
-                 :unit="options.unit" />
+                 :unit="unit" />
     <div class="tesla-controls cf">
       <tesla-counter :title="'Speed'"
                      :unit="speed.unit"
@@ -30,7 +30,7 @@
     </div>
     <tesla-panel :window="window"
                  :light="light"
-                 :unit="options.unit" />
+                 :unit="unit" />
     <div class="tesla-battery__notice">
       <p>
         The actual amount of range that you experience will vary based on your particular use conditions. See how particular use conditions may affect your range in our simulation model.
@@ -63,19 +63,20 @@ export default {
     TeslaWheels,
     TeslaPanel,
   },
+  created() {
+    this.metrics = teslaService.getModelData();
+  },
   data() {
     return {
       title: 'Ranger Per Charge',
-      options: {
-        models: ['75', '75D', '90D', 'P100D'],
-        unit: 'MI',
-      },
+      models: ['75', '75D', '90D', 'P100D'],
+      unit: 'km',
       speed: {
-        value: 45,
-        step: 5,
-        min: 45,
-        max: 70,
-        unit: 'mph',
+        value: 70,
+        step: 10,
+        min: 70,
+        max: 140,
+        unit: 'kmh',
       },
       temperature: {
         value: 20,
@@ -92,13 +93,10 @@ export default {
     };
   },
   computed: {
-    models() {
-      return teslaService.getModelData();
-    },
     stats() {
       // refactor the stats for the new data
-      return this.options.models.map(model => {
-        const miles = this.models[model][this.wheels][
+      return this.models.map(model => {
+        const miles = this.metrics[model][this.wheels][
           this.climate ? 'on' : 'off'
         ].speed[this.speed.value][this.temperature.value];
         return {
@@ -112,7 +110,7 @@ export default {
     changeClimate() {
       this.climate = !this.climate;
     },
-    getStats() {
+    getMetrics() {
       // fetch the mocks with import() and for the differents models you need
     },
   },
