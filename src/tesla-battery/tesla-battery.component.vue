@@ -53,6 +53,9 @@ export default {
     TeslaStats,
     TeslaWheels,
   },
+  created() {
+    this.models = teslaService.getModelData();
+  },
   data() {
     return {
       title: 'Ranger Per Charge',
@@ -61,12 +64,10 @@ export default {
       temperature: 20,
       climate: true,
       wheels: 19,
+      models: [],
     };
   },
   computed: {
-    models() {
-      return teslaService.getModelData();
-    },
     stats() {
       return this.results.map(model => {
         const miles = this.models[model][this.wheels][
