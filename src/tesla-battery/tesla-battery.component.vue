@@ -145,6 +145,9 @@ export default {
   components: {
     TeslaCar,
   },
+  created() {
+    this.models = teslaService.getModelData();
+  },
   data() {
     return {
       title: 'Ranger Per Charge',
@@ -172,12 +175,10 @@ export default {
         max: 70,
         step: 5,
       },
+      models: [],
     };
   },
   computed: {
-    models() {
-      return teslaService.getModelData();
-    },
     stats() {
       return this.results.map(model => {
         const miles = this.models[model][this.wheels.value][
