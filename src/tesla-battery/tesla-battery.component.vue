@@ -151,7 +151,7 @@ export default {
   data() {
     return {
       title: 'Ranger Per Charge',
-      results: ['60', '60D', '75', '75D', '90D', 'P100D'],
+      models: ['60', '60D', '75', '75D', '90D', 'P100D'],
       wheels: {
         sizes: [19, 21],
         value: 19,
@@ -175,13 +175,13 @@ export default {
         max: 70,
         step: 5,
       },
-      models: [],
+      metrics: [],
     };
   },
   computed: {
     stats() {
-      return this.results.map(model => {
-        const miles = this.models[model][this.wheels.value][
+      return this.models.map(model => {
+        const miles = this.metrics[model][this.wheels.value][
           this.climate.value ? 'on' : 'off'
         ].speed[this.speed.value][this.temperature.value];
         return {
