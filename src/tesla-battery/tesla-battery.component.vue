@@ -54,23 +54,23 @@ export default {
     TeslaWheels,
   },
   created() {
-    this.models = teslaService.getModelData();
+    this.metrics = teslaService.getModelData();
   },
   data() {
     return {
       title: 'Ranger Per Charge',
-      results: ['60', '60D', '75', '75D', '90D', 'P100D'],
+      models: ['60', '60D', '75', '75D', '90D', 'P100D'],
       speed: 55,
       temperature: 20,
       climate: true,
       wheels: 19,
-      models: [],
+      metrics: [],
     };
   },
   computed: {
     stats() {
-      return this.results.map(model => {
-        const miles = this.models[model][this.wheels][
+      return this.models.map(model => {
+        const miles = this.metrics[model][this.wheels][
           this.climate ? 'on' : 'off'
         ].speed[this.speed][this.temperature];
         return {
