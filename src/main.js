@@ -1,9 +1,11 @@
+import {getConfig} from '@/constants/config';
+import '@/filters';
 import axios from 'axios';
 import Vue from 'vue';
 import App from './App.vue';
-import './filters';
 
 Vue.config.productionTip = false;
+Vue.prototype.$config = getConfig();
 Vue.prototype.$http = axios;
 
 new Vue({

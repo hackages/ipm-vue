@@ -132,7 +132,7 @@ export default {
       const results = Promise.all(
         models.map(model =>
           this.$http
-            .get('https://vue-server-yibhuhmife.now.sh/api', {
+            .get(this.$config.apiUrl, {
               params: {
                 model,
                 unit,
