@@ -1,5 +1,1 @@
-import uppercase from './uppercase.filter';
-
-export default {
-  uppercase
-};
+import './uppercase.filter';

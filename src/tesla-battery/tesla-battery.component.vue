@@ -5,9 +5,9 @@
                :window="window"
                :light="light"
                :speed="speed.value"
-               :unit="options.unit" />
+               :unit="unit" />
     <tesla-stats :stats="stats"
-                 :unit="options.unit" />
+                 :unit="unit" />
     <div class="tesla-controls cf">
       <tesla-counter :title="'Speed'"
                      :unit="speed.unit"
@@ -34,7 +34,7 @@
                  :window="window"
                  :light="light"
                  :onMiles="onMiles"
-                 :unit="options.unit" />
+                 :unit="unit" />
     <div class="tesla-battery__notice">
       <p>
         The actual amount of range that you experience will vary based on your particular use conditions. See how particular use conditions may affect your range in our simulation model.
@@ -54,7 +54,7 @@ import TeslaStats from './components/tesla-stats.component';
 import TeslaWheels from './components/tesla-wheels.component';
 import TeslaPanel from './components/tesla-panel.component';
 
-import {debounce, difference} from 'lodash';
+import {debounce} from 'lodash';
 
 const defaultKmh = {
   value: 70,
@@ -85,10 +85,8 @@ export default {
   data() {
     return {
       title: 'Ranger Per Charge',
-      options: {
-        models: ['75', '75D', '90D', 'P100D'],
-        unit: 'mi',
-      },
+      models: ['75', '75D', '90D', 'P100D'],
+      unit: 'km',
       speed: defaultKmh,
       temperature: {
         value: 20,
@@ -121,7 +119,7 @@ export default {
       });
     },
     onMiles() {
-      return this.options.unit === 'mi';
+      return this.unit === 'mi';
     },
   },
   methods: {
@@ -154,25 +152,16 @@ export default {
       this.light = !this.light;
     }, 300),
     toggleKmMiles: debounce(function() {
-      this.options.unit = this.onMiles ? 'km' : 'mi';
+      this.unit = this.onMiles ? 'km' : 'mi';
     }, 300),
   },
   watch: {
-    options: {
+    unit: {
       immediate: true,
-      async handler(newOptions, oldOptions) {
-        this.metrics = oldOptions
-          ? [
-              ...this.metrics,
-              ...(await this.getStats(
-                newOptions.unit,
-                difference(newOptions.models, oldOptions.models)
-              )),
-            ]
-          : await this.getStats(newOptions.unit, newOptions.models);
+      async handler(unit) {
+        this.metrics = await this.getStats(unit, this.models);
         this.speed = this.onMiles ? defaultMph : defaultKmh;
       },
-      deep: true,
     },
   },
 };
