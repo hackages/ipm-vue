@@ -146,7 +146,7 @@ export default {
     TeslaCar,
   },
   created() {
-    this.models = teslaService.getModelData();
+    this.metrics = teslaService.getModelData();
   },
   data() {
     return {
