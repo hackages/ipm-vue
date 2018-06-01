@@ -11,6 +11,7 @@
     "precommit": "lint-staged"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "lodash": "^4.17.10",
     "node-sass": "^4.7.2",
     "vue": "^2.5.13"

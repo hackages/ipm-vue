@@ -10,7 +10,7 @@
     </div>
     <div @click="toggleKmMiles"
          :class="onMiles ? 'borderblue' : 'bordergrey'">
-      <div class="fontbutton">{{unit}}</div>
+      <div class="fontbutton">{{unit | uppercase}}</div>
     </div>
   </div>
 </template>

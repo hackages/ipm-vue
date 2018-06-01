@@ -54,7 +54,7 @@ import TeslaStats from './components/tesla-stats.component';
 import TeslaWheels from './components/tesla-wheels.component';
 import TeslaPanel from './components/tesla-panel.component';
 
-import {debounce} from 'lodash';
+import {debounce, difference} from 'lodash';
 
 const defaultKmh = {
   value: 70,
@@ -87,7 +87,7 @@ export default {
       title: 'Ranger Per Charge',
       options: {
         models: ['75', '75D', '90D', 'P100D'],
-        unit: 'KM',
+        unit: 'mi',
       },
       speed: defaultKmh,
       temperature: {
@@ -121,23 +121,29 @@ export default {
       });
     },
     onMiles() {
-      return this.options.unit === 'MI';
+      return this.options.unit === 'mi';
     },
   },
   methods: {
     changeClimate() {
       this.climate = !this.climate;
     },
-    getStats(fileName) {
+    getStats(unit, models) {
       const results = Promise.all(
-        this.options.models.map(model => {
-          return import(`../assets/mocks/${fileName}${model}Miles.json`).then(
-            metrics => ({
+        models.map(model =>
+          this.$http
+            .get('https://vue-server-yibhuhmife.now.sh/api', {
+              params: {
+                model,
+                unit,
+              },
+            })
+            .then(({status, data}) => (status === 200 ? data : []))
+            .then(metrics => ({
               model,
               metrics,
-            })
-          );
-        })
+            }))
+        )
       );
       return results;
     },
@@ -148,14 +154,22 @@ export default {
       this.light = !this.light;
     }, 300),
     toggleKmMiles: debounce(function() {
-      this.options.unit = this.onMiles ? 'KM' : 'MI';
+      this.options.unit = this.onMiles ? 'km' : 'mi';
     }, 300),
   },
   watch: {
     options: {
       immediate: true,
-      async handler() {
-        this.metrics = await this.getStats(this.onMiles ? 'hybrid' : 'metric');
+      async handler(newOptions, oldOptions) {
+        this.metrics = oldOptions
+          ? [
+              ...this.metrics,
+              ...(await this.getStats(
+                newOptions.unit,
+                difference(newOptions.models, oldOptions.models)
+              )),
+            ]
+          : await this.getStats(newOptions.unit, newOptions.models);
         this.speed = this.onMiles ? defaultMph : defaultKmh;
       },
       deep: true,
