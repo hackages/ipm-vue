@@ -111,7 +111,8 @@ export default {
       this.climate = !this.climate;
     },
     getMetrics() {
-      // fetch the mocks with import() and for the differents models you need
+      // fetch the right mocks for the right model/unit using an http call
+      // (you can use whatever library you want, we generally use axios)
     },
   },
 };
