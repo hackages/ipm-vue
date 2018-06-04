@@ -53,6 +53,22 @@ import TeslaPanel from './components/tesla-panel.component';
 
 import teslaService from './tesla-battery.service';
 
+const defaultKmh = {
+  value: 70,
+  step: 10,
+  min: 70,
+  max: 140,
+  unit: 'kmh',
+};
+
+const defaultMph = {
+  value: 45,
+  step: 5,
+  min: 40,
+  max: 70,
+  unit: 'mph',
+};
+
 export default {
   name: 'tesla-battery',
   components: {
@@ -70,14 +86,8 @@ export default {
     return {
       title: 'Ranger Per Charge',
       models: ['75', '75D', '90D', 'P100D'],
-      unit: 'km',
-      speed: {
-        value: 70,
-        step: 10,
-        min: 70,
-        max: 140,
-        unit: 'kmh',
-      },
+      unit: 'mi',
+      speed: defaultMph,
       temperature: {
         value: 20,
         min: -10,
