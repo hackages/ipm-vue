@@ -136,7 +136,7 @@ export default {
                 unit,
               },
             })
-            .then(({status, data}) => (status === 200 ? data : []))
+            .then(({status, data}) => (status === 200 ? data : {}))
             .then(metrics => ({
               model,
               metrics,
