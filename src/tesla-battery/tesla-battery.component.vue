@@ -86,7 +86,7 @@
         <!-- TeslaClimateComponent -->
         <div>
           <label class="tesla-climate__item"
-                 :class="{'tesla-heat' :limitHeat, 'tesla-climate__item--active': climate.value, 'tesla-climate__item--focused': climate.focused === climate.value}">
+                 :class="{'tesla-heat' :!limitHeat, 'tesla-climate__item--active': climate.value, 'tesla-climate__item--focused': climate.focused === climate.value}">
             <p class="heat">{{ (limitHeat ? 'ac' : 'heat') }} {{ climate.value ? 'on' : 'off' }}</p>
             <i class="tesla-climate__icon"></i>
             <input type="checkbox"
